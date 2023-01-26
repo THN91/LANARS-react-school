@@ -63,13 +63,15 @@ const Favorites = (): JSX.Element => {
               right: '5px',
               color: colors.light.checkbox,
             }}/>
-          <StarIcon sx={{
-            display: isFavorite(Number(item.id)) ? 'flex' : 'none',
-            position: 'absolute',
-            bottom: '5px',
-            left: '5px',
-            color: colors.light.checkbox,
-          }}/>
+          {!checked[Number(item.id)] &&
+            <StarIcon sx={{
+              display: isFavorite(Number(item.id)) ? 'flex' : 'none',
+              position: 'absolute',
+              bottom: '5px',
+              left: '5px',
+              color: colors.light.checkbox,
+            }}/>}
+
         </MyImageListItem>
       ))}
     </Box>
