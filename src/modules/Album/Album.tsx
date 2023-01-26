@@ -20,7 +20,7 @@ import {clearAlbumState, getAlbum, updateAlbum} from '../../shared/store/albumSl
 import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
 import AppBarAlbum from './AppBarAlbum';
 import {colors} from '../../styles/variables';
-import {changeHeader, clearPhotoState, getPhoto, setChecked} from '../../shared/store/photoSlice';
+import {changeHeader, clearIsNew, clearPhotoState, getPhoto, setChecked} from '../../shared/store/photoSlice';
 import UploadButton from '../../shared/components/UploadButton/UploadButton';
 
 
@@ -53,7 +53,7 @@ const Album = (): JSX.Element => {
   const {albumId} = useParams();
   const dispatch = useAppDispatch();
   const {album} = useAppSelector(state => state.album);
-  const {photos, checked} = useAppSelector(state => state.photo);
+  const {photos, checked, isNew} = useAppSelector(state => state.photo);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const isDisabled = Object.values(checked).some(item => item);
   const arrayCheckedPhoto = Object.entries(checked)
@@ -62,15 +62,7 @@ const Album = (): JSX.Element => {
 
   useEffect(() => {
     if (isOpen) {
-      const selectedNewPhoto = photos.reduce((acc, uploadPhoto) => {
-        if (uploadPhoto.isNew && uploadPhoto.id) {
-          return {...acc, [uploadPhoto.id]: true};
-        }
-        return {...acc};
-      }, {});
-      if (Object.keys(selectedNewPhoto).length !== 0) {
-        dispatch(setChecked({...checked, ...selectedNewPhoto}));
-      }
+      dispatch(setChecked({...checked, ...isNew}))
     }
   }, [photos]);
 
@@ -96,6 +88,7 @@ const Album = (): JSX.Element => {
     const newPhoto = {...album[0], photos: [...album[0].photos, ...arrayCheckedPhoto], id: Number(albumId)};
     dispatch(updateAlbum(newPhoto));
     dispatch(setChecked({}));
+    dispatch(clearIsNew());
     setIsOpen(!isOpen);
   };
 
