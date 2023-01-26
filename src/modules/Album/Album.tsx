@@ -62,7 +62,7 @@ const Album = (): JSX.Element => {
 
   useEffect(() => {
     if (isOpen) {
-      dispatch(setChecked({...checked, ...isNew}))
+      dispatch(setChecked({...checked, ...isNew}));
     }
   }, [photos]);
 

@@ -88,9 +88,9 @@ const photoSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(addPhoto.fulfilled, (state, action) => {
-       if (typeof action.payload.id === "number"){
-         state.isNew = {...state.isNew, [action.payload.id]: true};
-       }
+        if (typeof action.payload.id === 'number') {
+          state.isNew = {...state.isNew, [action.payload.id]: true};
+        }
         state.photos.push(action.payload);
       })
       .addCase(updatePhoto.fulfilled, (state, action) => {
