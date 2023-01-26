@@ -3,11 +3,11 @@ import React, {useEffect} from 'react';
 import {Box, Checkbox, ImageListItem, Stack, styled} from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 
-import {changeHeader, getPhoto, setChecked} from '../shared/store/photoSlice';
-import {useAppDispatch, useAppSelector} from '../shared/hooks/redux_hooks';
-import NotFound from '../shared/components/NotFound';
+import {changeHeader, getPhoto, setChecked} from '../../shared/store/photoSlice';
+import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
+import NotFound from '../../shared/components/NotFound';
 import UploadButton from 'shared/components/UploadButton/UploadButton';
-import {colors} from '../styles/variables';
+import {colors} from '../../styles/variables';
 
 const MyImageListItem = styled(ImageListItem)(({selected}: { selected: boolean }) => ({
   borderRadius: 8,

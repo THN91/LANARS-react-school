@@ -7,9 +7,8 @@ import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
-
-import {useAppDispatch, useAppSelector} from '../hooks/redux_hooks';
-import {changeHeader, getPhoto, setChecked, updatePhoto} from '../store/photoSlice';
+import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
+import {changeHeader, getPhoto, setChecked, updatePhoto} from '../../shared/store/photoSlice';
 
 
 const HeaderPhoto = (): JSX.Element => {

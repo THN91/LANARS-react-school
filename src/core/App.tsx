@@ -5,7 +5,7 @@ import {ThemeProvider} from '@mui/material';
 
 import {theme} from '../styles/theme';
 import {AllPath} from '../shared/constants/path';
-import Photos from '../modules/Photos';
+import Photos from '../modules/Photos/Photos';
 import Albums from '../modules/Albums/Albums';
 import Favorites from '../modules/Favorites';
 import Layout from '../shared/components/Layout';

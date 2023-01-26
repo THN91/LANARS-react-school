@@ -6,7 +6,7 @@ import {Box} from '@mui/material';
 import {useAppSelector} from '../hooks/redux_hooks';
 import Header from './Header';
 import SideMenu from './SideMenu';
-import HeaderPhoto from './HeaderCheckedPhoto';
+import HeaderPhoto from '../../modules/Photos/HeaderCheckedPhoto';
 
 
 const Layout = (): JSX.Element => {
