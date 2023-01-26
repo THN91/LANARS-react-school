@@ -7,7 +7,6 @@ export interface IAlbumsProps {
 }
 
 export interface IAlbumAddPhoto {
-  checkedPhotoId: (number | boolean)[];
   setIsOpen: Dispatch<React.SetStateAction<boolean>>;
   isOpen: boolean;
 }
