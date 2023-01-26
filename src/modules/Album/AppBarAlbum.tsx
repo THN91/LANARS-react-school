@@ -13,22 +13,41 @@ import CloseIcon from '@mui/icons-material/Close';
 import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
 import {AllPath} from '../../shared/constants/path';
 import {IAlbumAddPhoto} from '../../shared/interfaces/AlbumProps';
-import {getPhoto} from '../../shared/store/photoSlice';
+import {getPhoto, setChecked, updatePhoto} from '../../shared/store/photoSlice';
 
 
-const AppBarAlbum = ({checkedPhotoId, setIsOpen, isOpen}: IAlbumAddPhoto): JSX.Element => {
+const AppBarAlbum = ({setIsOpen, isOpen}: IAlbumAddPhoto): JSX.Element => {
   const dispatch = useAppDispatch();
   const {album} = useAppSelector(state => state.album);
+  const {checkedPhoto, photos} = useAppSelector(state => state.photo);
 
   const handlerClick = ()=> {
     dispatch(getPhoto([]));
     setIsOpen(!isOpen);
   };
 
+  const addPhotoFavorites = () => {
+    for (const id of checkedPhoto) {
+      const photoIsFavorite = {
+        date: photos[id].date,
+        description: photos[id].description,
+        id: Number(photos[id].id),
+        image: photos[id].image,
+        size: photos[id].size,
+        type: photos[id].type,
+        isFavorite: true,
+        isNew: false,
+      };
+      dispatch(updatePhoto(photoIsFavorite));
+    }
+    dispatch(getPhoto([]));
+    dispatch(setChecked({}));
+  };
+
   return (
     <AppBar position="sticky" color="inherit" sx={{boxShadow: 'none'}}>
       <Toolbar sx={{margin: '24px 56px', justifyContent: 'space-between', alignItems: 'center'}}>
-        {checkedPhotoId.length !== 0 ?
+        {checkedPhoto.length !== 0 ?
           <>
             <Box sx={{display: 'flex', alignItems: 'center', width: '100%'}}>
               <Link style={{textDecoration: 'none', color: 'inherit'}} to={AllPath.ALBUM}>
@@ -38,16 +57,16 @@ const AppBarAlbum = ({checkedPhotoId, setIsOpen, isOpen}: IAlbumAddPhoto): JSX.E
               </Link>
               <Typography component="span" variant="h1">
                 {
-                  checkedPhotoId.length === 0
+                  checkedPhoto.length === 0
                     ? 'Add to album'
-                    : checkedPhotoId.length === 1
+                    : checkedPhoto.length === 1
                       ? 'Selected 1 photo'
-                      : `Selected ${checkedPhotoId.length} photos`
+                      : `Selected ${checkedPhoto.length} photos`
                 }
               </Typography>
             </Box>
             <Stack direction="row" spacing={2}>
-              <IconButton size="large" color="primary">
+              <IconButton onClick={addPhotoFavorites} size="large" color="primary">
                 <StarBorderOutlinedIcon/>
               </IconButton>
               <IconButton size="large" color="primary">
