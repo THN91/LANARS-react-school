@@ -15,7 +15,6 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import {TransitionProps} from '@mui/material/transitions';
-import StarIcon from '@mui/icons-material/Star';
 
 import {clearAlbumState, getAlbum, updateAlbum} from '../../shared/store/albumSlice';
 import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
@@ -103,10 +102,6 @@ const Album = (): JSX.Element => {
   const handlerClick = (photoId: number) =>
     dispatch(setChecked({...checked, [photoId]: !checked[photoId]}));
 
-  const isFavorite = (photoId: number) => {
-    return photos.find(item=>item.id === photoId && item.isFavorite);
-  };
-
 
   return (
     <>
@@ -131,13 +126,6 @@ const Album = (): JSX.Element => {
                 right: '5px',
                 color: '#fff',
               }}/>
-            <StarIcon sx={{
-              display: isFavorite(Number(item.id)) ? 'flex' : 'none',
-              position: 'absolute',
-              bottom: '5px',
-              left: '5px',
-              color: colors.light.checkbox,
-            }}/>
           </MyImageListItem>
         ))}
       </Box>

@@ -34,10 +34,6 @@ const MyImageListItem = styled(ImageListItem)(({selected}: { selected: boolean }
   },
 }));
 
-const AddPhotoContainer = styled(Box)(() => ({
-
-}));
-
 const Transition = React.forwardRef(function transition(
   props: TransitionProps & {
     children: React.ReactElement;
@@ -83,7 +79,7 @@ const AddPhoto = ({isOpen, handleOpen, setPhotos}: IAlbumsProps): JSX.Element =>
 
   return (
     <Dialog fullScreen open={isOpen} TransitionComponent={Transition}>
-      <AddPhotoContainer sx={{bgcolor: 'background.paper'}}>
+      <Box sx={{bgcolor: 'background.paper'}}>
         <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', m: 1, p: '0 32px'}}>
           <Box sx={{display: 'flex', alignItems: 'center'}}>
             <Link style={{textDecoration: 'none', color: 'inherit'}} to={AllPath.ALBUM}>
@@ -127,7 +123,7 @@ const AddPhoto = ({isOpen, handleOpen, setPhotos}: IAlbumsProps): JSX.Element =>
         <Box sx={{display: 'flex', flexDirection: 'row-reverse', m: 5}}>
           <UploadButton nameBtn={'SELECT FILES FROM COMPUTER'}/>
         </Box>
-      </AddPhotoContainer>
+      </Box>
     </Dialog>
   );
 };

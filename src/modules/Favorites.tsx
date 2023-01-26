@@ -20,11 +20,6 @@ const MyImageListItem = styled(ImageListItem)(({selected}: { selected: boolean }
   ['img']: {
     transform: selected && 'scale(0.8)',
   },
-  ['& .MuiSvgIcon-root']: {
-    bottom: selected && 15,
-    left: selected && 15,
-    transform: selected && 'scale(0.8)',
-  },
 }));
 
 
@@ -43,7 +38,6 @@ const Favorites = (): JSX.Element => {
     dispatch(setChecked({...checked, [photoId]: !checked[photoId]}));
 
   const isFavorite = (photoId: number) => photos.find(item => item.id === photoId && item.isFavorite);
-
 
   return (
     <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 1, mt: 3, height: 142}}>

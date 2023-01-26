@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 
 import {Box, Checkbox, ImageListItem, Stack, styled} from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
 
 import {changeHeader, getPhoto, setChecked} from '../../shared/store/photoSlice';
 import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
@@ -42,8 +41,6 @@ const Photos = (): JSX.Element => {
 
   const handlerClick = (photoId: number) => dispatch(setChecked({...checked, [photoId]: !checked[photoId]}));
 
-  const isFavorite = (photoId: number) =>  photos.find(item=>item.id === photoId && item.isFavorite);
-
 
   return (
     <>
@@ -70,13 +67,6 @@ const Photos = (): JSX.Element => {
                     right: '5px',
                     color: colors.light.checkbox,
                   }}/>
-                <StarIcon sx={{
-                  display: isFavorite(Number(item.id)) ? 'flex' : 'none',
-                  position: 'absolute',
-                  bottom: '5px',
-                  left: '5px',
-                  color: colors.light.checkbox,
-                }}/>
               </MyImageListItem>
             ))}
           </Box>
