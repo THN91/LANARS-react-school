@@ -20,7 +20,7 @@ const MyImageListItem = styled(ImageListItem)(({selected}: { selected: boolean }
   ['img']: {
     transform: selected && 'scale(0.8)',
   },
-  ['&.MuiSvgIcon-root']: {
+  ['& .MuiSvgIcon-root']: {
     bottom: selected && 15,
     left: selected && 15,
     transform: selected && 'scale(0.8)',

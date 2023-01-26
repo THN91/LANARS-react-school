@@ -26,7 +26,7 @@ const App = (): JSX.Element => {
           <Route path={AllPath.NOT_FOUND_PAGE} element={<NotFoundPage/>}/>
         </Route>
         <Route path={'albums/:albumId'} element={<Album/>}/>
-        <Route path={'albums/createAlbum'} element={<CreateAlbum/>}/>
+        <Route path={AllPath.CREATE_ALBUM} element={<CreateAlbum/>}/>
       </Routes>
     </ThemeProvider>
   );
