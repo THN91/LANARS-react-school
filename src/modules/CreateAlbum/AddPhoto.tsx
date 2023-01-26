@@ -17,7 +17,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import {TransitionProps} from '@mui/material/transitions';
 
 import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
-import {clearPhotoState, getPhoto} from '../../shared/store/photoSlice';
+import {clearIsNew, clearPhotoState, getPhoto} from '../../shared/store/photoSlice';
 import UploadButton from '../../shared/components/UploadButton/UploadButton';
 import {colors} from '../../styles/variables';
 import {IAlbumsProps} from '../../shared/interfaces/AlbumProps';
@@ -54,20 +54,12 @@ const AddPhoto = ({isOpen, handleOpen, setPhotos}: IAlbumsProps): JSX.Element =>
   const [checkedPhoto, setCheckedPhoto] = useState<Record<number, boolean>>({});
   const checkedPhotoLength = Object.entries(checkedPhoto).filter(item => item[1]);
   const photos = Object.entries(checkedPhoto)
-    .map(item => item[1] && Number(item[0])).filter(item => Number(item)) as unknown as number[];
+    .map(item => item[1] && Number(item[0])).filter(item => Number(item)) as number[];
   const isDisabled = Object.values(checkedPhoto).some(item => item);
 
 
   useEffect(() => {
-    const selectedNewPhoto = photo.photos.reduce((acc, uploadPhoto) => {
-      if (uploadPhoto.isNew && uploadPhoto.id) {
-        return {...acc, [uploadPhoto.id]: true};
-      }
-      return {...acc};
-    }, {});
-    if (Object.keys(selectedNewPhoto).length !== 0) {
-      setCheckedPhoto(prevState => ({...prevState, ...selectedNewPhoto}));
-    }
+    setCheckedPhoto(prevState => ({...prevState, ...photo.isNew}));
   }, [photo]);
 
   useEffect(() => {
@@ -84,6 +76,7 @@ const AddPhoto = ({isOpen, handleOpen, setPhotos}: IAlbumsProps): JSX.Element =>
 
   const handlerModal = () => {
     dispatch(clearPhotoState());
+    dispatch(clearIsNew());
     dispatch(getPhoto([...photos]));
     handleOpen();
   };

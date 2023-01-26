@@ -13,7 +13,8 @@ export interface IPhotoState {
   loading: keyof typeof Status;
   error: string;
   checkedPhoto: number[];
-  checked: Record<number, boolean>,
+  checked: Record<number, boolean>;
+  isNew: Record<number, boolean>;
 }
 
 export interface IAlbumState {

@@ -49,7 +49,6 @@ export class PhotoEntity {
   type = '';
   id?: number;
   isFavorite = false;
-  isNew = false;
 
   constructor(data: PhotoEntity) {
     this.date = data.date;

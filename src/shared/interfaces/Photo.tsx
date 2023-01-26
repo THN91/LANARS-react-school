@@ -6,5 +6,4 @@ export interface IPhoto {
   size: number;
   type: string;
   isFavorite?: boolean;
-  isNew?: boolean;
 }

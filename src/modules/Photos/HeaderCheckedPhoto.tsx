@@ -26,8 +26,7 @@ const HeaderPhoto = (): JSX.Element => {
         image: photos[arrayIndex].image,
         size: photos[arrayIndex].size,
         type: photos[arrayIndex].type,
-        isFavorite: true,
-        isNew: false,
+        isFavorite: !photos[arrayIndex].isFavorite,
       };
       dispatch(updatePhoto(photoIsFavorite));
     }

@@ -67,6 +67,7 @@ const initialState: IPhotoState = {
   error: '',
   checkedPhoto: [],
   checked: {},
+  isNew: {},
 };
 
 const photoSlice = createSlice({
@@ -74,6 +75,9 @@ const photoSlice = createSlice({
   initialState,
   reducers: {
     clearPhotoState: () => initialState,
+    clearIsNew: (state) => {
+      state.isNew = {};
+    },
     changeHeader: (state, action) => {
       state.checkedPhoto = action.payload;
     },
@@ -84,8 +88,10 @@ const photoSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(addPhoto.fulfilled, (state, action) => {
-        state.loading = 'SUCCEEDED';
-        state.photos.push({...action.payload, isNew: true});
+       if (typeof action.payload.id === "number"){
+         state.isNew = {...state.isNew, [action.payload.id]: true};
+       }
+        state.photos.push(action.payload);
       })
       .addCase(updatePhoto.fulfilled, (state, action) => {
         state.loading = 'SUCCEEDED';
@@ -107,6 +113,6 @@ const photoSlice = createSlice({
   },
 });
 
-export const {clearPhotoState, changeHeader, setChecked} = photoSlice.actions;
+export const {clearPhotoState, changeHeader, setChecked, clearIsNew} = photoSlice.actions;
 
 export default photoSlice.reducer;
