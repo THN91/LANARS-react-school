@@ -54,7 +54,7 @@ const AddPhoto = ({isOpen, handleOpen, setPhotos}: IAlbumsProps): JSX.Element =>
   const [checkedPhoto, setCheckedPhoto] = useState<Record<number, boolean>>({});
   const checkedPhotoLength = Object.entries(checkedPhoto).filter(item => item[1]);
   const photos = Object.entries(checkedPhoto)
-    .map(item => item[1] && Number(item[0])).filter(item => Number(item)) as unknown as number[];
+    .map(item => item[1] && Number(item[0])).filter(item => Number(item)) as number[];
   const isDisabled = Object.values(checkedPhoto).some(item => item);
 
 
