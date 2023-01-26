@@ -9,12 +9,14 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 
 import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
 import {changeHeader, getPhoto, setChecked, updatePhoto} from '../../shared/store/photoSlice';
+import {AllPath} from "../../shared/constants/path";
 
 
 const HeaderPhoto = (): JSX.Element => {
-
   const dispatch = useAppDispatch();
   const {checkedPhoto, photos} = useAppSelector(state => state.photo);
+  const renderIcon = window.location.pathname === AllPath.ALL_PHOTO
+
 
   const addPhotoFavorites = () => {
     for (const id of checkedPhoto) {
@@ -61,15 +63,17 @@ const HeaderPhoto = (): JSX.Element => {
               </Typography>
             </Box>
             <Stack direction="row" spacing={2}>
-              <IconButton size="large" color="primary">
-                <AddIcon/>
-              </IconButton>
+              {renderIcon &&
+                <IconButton size="large" color="primary">
+                  <AddIcon/>
+                </IconButton>}
               <IconButton onClick={addPhotoFavorites} size="large" color="primary">
                 <StarBorderOutlinedIcon/>
               </IconButton>
-              <IconButton size="large" color="primary">
-                <FileUploadOutlinedIcon/>
-              </IconButton>
+              {renderIcon &&
+                <IconButton size="large" color="primary">
+                  <FileUploadOutlinedIcon/>
+                </IconButton>}
               <IconButton size="large" color="primary">
                 <DeleteOutlineOutlinedIcon/>
               </IconButton>

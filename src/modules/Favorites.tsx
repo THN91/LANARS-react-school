@@ -4,7 +4,7 @@ import {Box, Checkbox, ImageListItem, styled} from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 
 import {useAppDispatch, useAppSelector} from '../shared/hooks/redux_hooks';
-import {getPhoto, setChecked} from '../shared/store/photoSlice';
+import {changeHeader, getPhoto, setChecked} from '../shared/store/photoSlice';
 import {colors} from '../styles/variables';
 
 const MyImageListItem = styled(ImageListItem)(({selected}: { selected: boolean }) => ({
@@ -34,8 +34,11 @@ const Favorites = (): JSX.Element => {
     dispatch(getPhoto([]));
   }, []);
 
-  const handlerClick = (photoId: number) =>
-    dispatch(setChecked({...checked, [photoId]: !checked[photoId]}));
+  useEffect(() => {
+    dispatch(changeHeader([...arrayCheckedPhoto]));
+  }, [checked]);
+
+  const handlerClick = (photoId: number) => dispatch(setChecked({...checked, [photoId]: !checked[photoId]}));
 
   const isFavorite = (photoId: number) => photos.find(item => item.id === photoId && item.isFavorite);
 
