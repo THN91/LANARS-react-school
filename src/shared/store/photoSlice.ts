@@ -75,10 +75,10 @@ const photoSlice = createSlice({
   reducers: {
     clearPhotoState: () => initialState,
     changeHeader: (state, action) => {
-      state.checkedPhoto = action.payload
+      state.checkedPhoto = action.payload;
     },
     setChecked: (state, action) => {
-      state.checked = action.payload
+      state.checked = action.payload;
     },
   },
   extraReducers: builder => {

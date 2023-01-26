@@ -31,7 +31,7 @@ const SideMenu = (): JSX.Element => {
   const handlerClick = (path: string) => {
     setRoute(path);
     navigate(path);
-  }
+  };
   return (
     <MenuList sx={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', p: 4}}>
       <SideMenuBtn

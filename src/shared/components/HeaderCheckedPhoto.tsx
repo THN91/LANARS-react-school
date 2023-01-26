@@ -27,18 +27,18 @@ const HeaderPhoto = (): JSX.Element => {
         size: photos[id].size,
         type: photos[id].type,
         isFavorite: true,
-        isNew: true,
+        isNew: false,
       };
       dispatch(updatePhoto(photoIsFavorite));
     }
     dispatch(getPhoto([]));
     dispatch(setChecked({}));
-  }
+  };
 
   const allCheckedCancel = () => {
     dispatch(changeHeader([]));
     dispatch(setChecked({}));
-  }
+  };
 
   return (
     <AppBar position="sticky" color="inherit" sx={{boxShadow: 'none'}}>
@@ -50,7 +50,8 @@ const HeaderPhoto = (): JSX.Element => {
                 onClick={() => allCheckedCancel()}
                 size="large"
                 edge="start"
-                color="inherit">
+                color="inherit"
+              >
                 <CloseIcon/>
               </IconButton>
               <Typography component="span" variant="h1">

@@ -52,7 +52,7 @@ const Album = (): JSX.Element => {
   const {albumId} = useParams();
   const dispatch = useAppDispatch();
   const {album} = useAppSelector(state => state.album);
-  const {photo} = useAppSelector(state => state);
+  const {photos} = useAppSelector(state => state.photo);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [checkedPhoto, setCheckedPhoto] = useState<Record<number, boolean>>({});
   const isDisabled = Object.values(checkedPhoto).some(item => item);
@@ -62,7 +62,7 @@ const Album = (): JSX.Element => {
 
   useEffect(() => {
     if(isOpen){
-      const selectedNewPhoto = photo.photos.reduce((acc, uploadPhoto) => {
+      const selectedNewPhoto = photos.reduce((acc, uploadPhoto) => {
         if (uploadPhoto.isNew && uploadPhoto.id) {
           return {...acc, [uploadPhoto.id]: true};
         }
@@ -72,7 +72,7 @@ const Album = (): JSX.Element => {
         setCheckedPhoto(prevState => ({...prevState, ...selectedNewPhoto}));
       }
     }
-  }, [photo]);
+  }, [photos]);
 
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const Album = (): JSX.Element => {
     <>
       <AppBarAlbum isOpen={isOpen} setIsOpen={setIsOpen} checkedPhotoId={arrayCheckedPhoto}/>
       <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 1, m: '24px 40px'}}>
-        {photo.photos.map((item) => (
+        {photos.map((item) => (
           <MyImageListItem
             key={item.id}
             selected={!!checkedPhoto[Number(item.id)]}
@@ -156,7 +156,7 @@ const Album = (): JSX.Element => {
           </Box>
           <Divider/>
           <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 1, m: '24px 40px'}}>
-            {photo.photos.map((item) => (
+            {photos.map((item) => (
               <MyImageListItem
                 key={item.id}
                 selected={!!checkedPhoto[Number(item.id)]}
