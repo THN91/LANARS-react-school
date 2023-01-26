@@ -18,13 +18,14 @@ const HeaderPhoto = (): JSX.Element => {
 
   const addPhotoFavorites = () => {
     for (const id of checkedPhoto) {
+      const arrayIndex = id - 1;
       const photoIsFavorite = {
-        date: photos[id].date,
-        description: photos[id].description,
-        id: Number(photos[id].id),
-        image: photos[id].image,
-        size: photos[id].size,
-        type: photos[id].type,
+        date: photos[arrayIndex].date,
+        description: photos[arrayIndex].description,
+        id: Number(photos[arrayIndex].id),
+        image: photos[arrayIndex].image,
+        size: photos[arrayIndex].size,
+        type: photos[arrayIndex].type,
         isFavorite: true,
         isNew: false,
       };

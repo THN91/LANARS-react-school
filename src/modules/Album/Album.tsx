@@ -104,7 +104,7 @@ const Album = (): JSX.Element => {
     dispatch(setChecked({...checked, [photoId]: !checked[photoId]}));
 
   const isFavorite = (photoId: number) => {
-    return photos.find(item=>item.id === photoId+1 && item.isFavorite);
+    return photos.find(item=>item.id === photoId && item.isFavorite);
   };
 
 

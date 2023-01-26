@@ -32,7 +32,6 @@ const Photos = (): JSX.Element => {
     .map(item => item[1] && Number(item[0]))
     .filter(item => item) as number[];
 
-
   useEffect(() => {
     dispatch(getPhoto([]));
   }, []);
@@ -41,12 +40,9 @@ const Photos = (): JSX.Element => {
     dispatch(changeHeader([...arrayCheckedPhoto]));
   }, [checked]);
 
-  const handlerClick = (photoId: number) =>
-    dispatch(setChecked({...checked, [photoId]: !checked[photoId]}));
+  const handlerClick = (photoId: number) => dispatch(setChecked({...checked, [photoId]: !checked[photoId]}));
 
-  const isFavorite = (photoId: number) => {
-    return photos.find(item=>item.id === photoId+1 && item.isFavorite);
-  };
+  const isFavorite = (photoId: number) =>  photos.find(item=>item.id === photoId && item.isFavorite);
 
 
   return (
