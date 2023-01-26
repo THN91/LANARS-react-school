@@ -35,21 +35,21 @@ const SideMenu = (): JSX.Element => {
   return (
     <MenuList sx={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', p: 4}}>
       <SideMenuBtn
-        selected={route === AllPath.ALL_PHOTO && true}
+        selected={route === AllPath.ALL_PHOTO}
         onClick={() => handlerClick(AllPath.ALL_PHOTO)}
       >
         <InsertPhotoOutlinedIcon sx={{p: '0 8px 0 16px'}}/>
         All photos
       </SideMenuBtn>
       <SideMenuBtn
-        selected={route === AllPath.ALBUM && true}
+        selected={route === AllPath.ALBUM}
         onClick={() => handlerClick(AllPath.ALBUM)}
       >
         <PhotoAlbumOutlinedIcon sx={{p: '0 8px 0 16px'}}/>
         Albums
       </SideMenuBtn>
       <SideMenuBtn
-        selected={route === AllPath.FAVORITES && true}
+        selected={route === AllPath.FAVORITES}
         onClick={() => handlerClick(AllPath.FAVORITES)}
       >
         <StarBorderOutlinedIcon sx={{p: '0 8px 0 16px'}}/>
