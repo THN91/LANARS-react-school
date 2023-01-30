@@ -41,8 +41,7 @@ export const getPhoto = createAsyncThunk(
     try {
       if (Array.isArray(id) && id.length === 1 && id[0] !== 0) {
         return await API.get(`/api/photos?ids=${id}`) as IPhoto;
-      }
-      else {
+      } else {
         return await API.get(`/api/photos${id && id.length > 1 ? `?ids=${id}` : ''}`) as IPhoto[];
       }
     } catch (error) {
@@ -71,12 +70,14 @@ const initialState: IPhotoState = {
 const photoSlice = createSlice({
   name: 'photo',
   initialState,
-  reducers: {},
+  reducers: {
+    clearPhotoState: () => initialState,
+  },
   extraReducers: builder => {
     builder
       .addCase(addPhoto.fulfilled, (state, action) => {
         state.loading = 'SUCCEEDED';
-        state.photos.push(action.payload);
+        state.photos.push({...action.payload, isNew: true});
       })
       .addCase(updatePhoto.fulfilled, (state, action) => {
         state.loading = 'SUCCEEDED';
@@ -98,5 +99,6 @@ const photoSlice = createSlice({
   },
 });
 
+export const {clearPhotoState} = photoSlice.actions;
 
 export default photoSlice.reducer;

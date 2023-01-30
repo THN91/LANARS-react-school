@@ -71,7 +71,9 @@ const initialState: IAlbumState = {
 const albumSlice = createSlice({
   name: 'album',
   initialState,
-  reducers: {},
+  reducers: {
+    clearAlbumState: () => initialState,
+  },
   extraReducers: builder => {
     builder
       .addCase(addAlbum.fulfilled, (state, action) => {
@@ -98,5 +100,6 @@ const albumSlice = createSlice({
   },
 });
 
+export const {clearAlbumState} = albumSlice.actions;
 
 export default albumSlice.reducer;

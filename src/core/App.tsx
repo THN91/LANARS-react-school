@@ -8,6 +8,8 @@ import Photos from '../modules/Photos';
 import Albums from '../modules/Albums';
 import Layout from '../shared/components/Layout';
 import NotFoundPage from '../modules/NotFoundPage';
+import Album from '../modules/Album';
+import CreateAlbum from '../modules/CreateAlbum';
 import {theme} from '../styles/theme';
 
 
@@ -20,6 +22,8 @@ const App = (): JSX.Element => {
           <Route path={AllPath.ALBUM} element={<Albums/>}/>
           <Route path={AllPath.NOT_FOUND_PAGE} element={<NotFoundPage/>}/>
         </Route>
+        <Route path={'albums/:albumId'} element={<Album/>}/>
+        <Route path={'albums/createAlbum'} element={<CreateAlbum/>}/>
       </Routes>
     </ThemeProvider>
   );

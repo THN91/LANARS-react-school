@@ -5,4 +5,5 @@ export interface IPhoto {
   image: string;
   size: number;
   type: string;
+  isNew?: boolean;
 }

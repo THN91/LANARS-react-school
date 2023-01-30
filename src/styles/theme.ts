@@ -28,7 +28,7 @@ export const theme = createTheme({
     },
   },
   components: {
-    MuiDivider: {
+    ['MuiDivider']: {
       styleOverrides: {
         root: {
           borderColor: colors.light.divider,
