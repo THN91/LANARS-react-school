@@ -14,6 +14,7 @@ import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
 import {AllPath} from '../../shared/constants/path';
 import {IAlbumAddPhoto} from '../../shared/interfaces/AlbumProps';
 import {getPhoto, setChecked, updatePhoto} from '../../shared/store/photoSlice';
+import {IPhoto} from '../../shared/interfaces';
 
 
 const AppBarAlbum = ({setIsOpen, isOpen}: IAlbumAddPhoto): JSX.Element => {
@@ -27,18 +28,9 @@ const AppBarAlbum = ({setIsOpen, isOpen}: IAlbumAddPhoto): JSX.Element => {
   };
 
   const addPhotoFavorites = () => {
-    for (const id of checkedPhoto) {
-      const arrayIndex = id - 1;
-      const photoIsFavorite = {
-        date: photos[arrayIndex].date,
-        description: photos[arrayIndex].description,
-        id: Number(photos[arrayIndex].id),
-        image: photos[arrayIndex].image,
-        size: photos[arrayIndex].size,
-        type: photos[arrayIndex].type,
-        isFavorite: !photos[arrayIndex].isFavorite,
-      };
-      dispatch(updatePhoto(photoIsFavorite));
+    for (const checkedId of checkedPhoto) {
+      const photo = photos.find(item => item.id === checkedId) as Required<IPhoto>;
+      dispatch(updatePhoto({...photo, isFavorite: !photo.isFavorite}));
     }
     dispatch(getPhoto([]));
     dispatch(setChecked({}));

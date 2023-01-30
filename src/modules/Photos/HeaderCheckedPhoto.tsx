@@ -10,6 +10,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
 import {changeHeader, getPhoto, setChecked, updatePhoto} from '../../shared/store/photoSlice';
 import {AllPath} from '../../shared/constants/path';
+import {IPhoto} from '../../shared/interfaces';
 
 
 const HeaderPhoto = (): JSX.Element => {
@@ -19,18 +20,9 @@ const HeaderPhoto = (): JSX.Element => {
 
 
   const addPhotoFavorites = () => {
-    for (const id of checkedPhoto) {
-      const arrayIndex = id - 1;
-      const photoIsFavorite = {
-        date: photos[arrayIndex].date,
-        description: photos[arrayIndex].description,
-        id: Number(photos[arrayIndex].id),
-        image: photos[arrayIndex].image,
-        size: photos[arrayIndex].size,
-        type: photos[arrayIndex].type,
-        isFavorite: !photos[arrayIndex].isFavorite,
-      };
-      dispatch(updatePhoto(photoIsFavorite));
+    for (const checkedId of checkedPhoto) {
+      const photo = photos.find(item => item.id === checkedId) as Required<IPhoto>;
+      dispatch(updatePhoto({...photo, isFavorite: !photo.isFavorite}));
     }
     dispatch(getPhoto([]));
     dispatch(setChecked({}));
