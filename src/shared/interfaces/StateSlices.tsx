@@ -15,6 +15,7 @@ export interface IPhotoState {
   checkedPhoto: number[];
   checked: Record<number, boolean>;
   isNew: Record<number, boolean>;
+  viewPhoto: number;
 }
 
 export interface IAlbumState {
