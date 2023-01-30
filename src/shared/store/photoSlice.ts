@@ -68,6 +68,7 @@ const initialState: IPhotoState = {
   checkedPhoto: [],
   checked: {},
   isNew: {},
+  viewPhoto: 0,
 };
 
 const photoSlice = createSlice({
@@ -83,6 +84,9 @@ const photoSlice = createSlice({
     },
     setChecked: (state, action) => {
       state.checked = action.payload;
+    },
+    setViewPhoto: (state, action) => {
+      state.viewPhoto = action.payload;
     },
   },
   extraReducers: builder => {
@@ -113,6 +117,6 @@ const photoSlice = createSlice({
   },
 });
 
-export const {clearPhotoState, changeHeader, setChecked, clearIsNew} = photoSlice.actions;
+export const {clearPhotoState, changeHeader, setChecked, clearIsNew, setViewPhoto} = photoSlice.actions;
 
 export default photoSlice.reducer;
