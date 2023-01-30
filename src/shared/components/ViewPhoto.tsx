@@ -106,7 +106,7 @@ const ViewPhoto = (): JSX.Element => {
         }
         <Box sx={{display: 'flex', justifyContent: 'center', width: '20vw'}}>
           {photos.length - 1 !== currentPhoto &&
-            <PrevNextBtn onClick={() => nextPhoto()} sx={{}} color="inherit">
+            <PrevNextBtn onClick={() => nextPhoto()} color="inherit">
               <ArrowForwardIosIcon/>
             </PrevNextBtn>}
         </Box>
