@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import {AppBar, Box, IconButton, ImageListItem, Stack, Toolbar} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -15,6 +16,7 @@ import {getPhoto} from "../store/photoSlice";
 
 
 const ViewPhoto = (): JSX.Element => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {photos} = useAppSelector(state => state.photo);
 
@@ -31,6 +33,7 @@ const ViewPhoto = (): JSX.Element => {
       <AppBar position="absolute" color="transparent" sx={{boxShadow: 'none'}}>
         <Toolbar sx={{margin: '0 40px', justifyContent: 'space-between', alignItems: 'center'}}>
           <IconButton
+            onClick={() => navigate(-1)}
             size="large"
             color="inherit"
           >
