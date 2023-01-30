@@ -1,12 +1,14 @@
 import React, {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import {Box, Checkbox, ImageListItem, Stack, styled} from '@mui/material';
 
-import {changeHeader, getPhoto, setChecked} from '../../shared/store/photoSlice';
+import {changeHeader, getPhoto, setChecked, setViewPhoto} from '../../shared/store/photoSlice';
 import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
 import NotFound from '../../shared/components/NotFound';
 import UploadButton from 'shared/components/UploadButton/UploadButton';
 import {colors} from '../../styles/variables';
+import {AllPath} from '../../shared/constants/path';
 
 const MyImageListItem = styled(ImageListItem)(({selected}: { selected: boolean }) => ({
   borderRadius: 8,
@@ -25,6 +27,7 @@ const MyImageListItem = styled(ImageListItem)(({selected}: { selected: boolean }
 
 
 const Photos = (): JSX.Element => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {photos, checked} = useAppSelector(state => state.photo);
   const arrayCheckedPhoto = Object.entries(checked)
@@ -41,6 +44,11 @@ const Photos = (): JSX.Element => {
 
   const handlerClick = (photoId: number) => dispatch(setChecked({...checked, [photoId]: !checked[photoId]}));
 
+  const viewPhoto = (photoId: number) => {
+    dispatch(setViewPhoto(photoId));
+    navigate(AllPath.VIEW_PHOTO);
+  };
+
 
   return (
     <>
@@ -54,6 +62,7 @@ const Photos = (): JSX.Element => {
                 selected={!!checked[Number(item.id)]}
               >
                 <img
+                  onClick={() => viewPhoto(Number(item.id))}
                   style={{borderRadius: 8, width: 142, height: 142}}
                   src={`data:${item.type};base64,${item.image}`}
                   alt="photo"/>
