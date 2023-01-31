@@ -12,6 +12,7 @@ import Layout from '../shared/components/Layout';
 import NotFoundPage from '../modules/NotFoundPage';
 import Album from '../modules/Album/Album';
 import CreateAlbum from '../modules/CreateAlbum/CreateAlbum';
+import ViewPhoto from '../shared/components/ViewPhoto';
 
 
 
@@ -27,6 +28,7 @@ const App = (): JSX.Element => {
         </Route>
         <Route path={'albums/:albumId'} element={<Album/>}/>
         <Route path={AllPath.CREATE_ALBUM} element={<CreateAlbum/>}/>
+        <Route path={AllPath.VIEW_PHOTO} element={<ViewPhoto/>}/>
       </Routes>
     </ThemeProvider>
   );

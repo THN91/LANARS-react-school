@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {useParams} from 'react-router';
 
 import {
@@ -20,8 +21,16 @@ import {clearAlbumState, getAlbum, updateAlbum} from '../../shared/store/albumSl
 import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
 import AppBarAlbum from './AppBarAlbum';
 import {colors} from '../../styles/variables';
-import {changeHeader, clearIsNew, clearPhotoState, getPhoto, setChecked} from '../../shared/store/photoSlice';
+import {
+  changeHeader,
+  clearIsNew,
+  clearPhotoState,
+  getPhoto,
+  setChecked,
+  setViewPhoto,
+} from '../../shared/store/photoSlice';
 import UploadButton from '../../shared/components/UploadButton/UploadButton';
+import {AllPath} from '../../shared/constants/path';
 
 
 const MyImageListItem = styled(ImageListItem)(({selected}: { selected: boolean }) => ({
@@ -50,6 +59,7 @@ const Transition = React.forwardRef(function transition(
 
 
 const Album = (): JSX.Element => {
+  const navigate = useNavigate();
   const {albumId} = useParams();
   const dispatch = useAppDispatch();
   const {album} = useAppSelector(state => state.album);
@@ -95,6 +105,11 @@ const Album = (): JSX.Element => {
   const handlerClick = (photoId: number) =>
     dispatch(setChecked({...checked, [photoId]: !checked[photoId]}));
 
+  const viewPhoto = (photoId: number) => {
+    dispatch(setViewPhoto(photoId));
+    navigate(AllPath.VIEW_PHOTO);
+  };
+
 
   return (
     <>
@@ -106,6 +121,7 @@ const Album = (): JSX.Element => {
             selected={!!checked[Number(item.id)]}
           >
             <img
+              onClick={() => viewPhoto(Number(item.id))}
               style={{borderRadius: 8, width: 142, height: 142}}
               src={`data:${item.type};base64,${item.image}`}
               alt="photo"/>
