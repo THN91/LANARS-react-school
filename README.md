@@ -2,9 +2,7 @@
 #### This is a base for a future photo album project
 
 ## Deployment link:
-#### https://lanars-react-school-mocha.vercel.app/
-#### https://lanars-react-school-git-main-thn91.vercel.app/
-#### https://lanars-react-school-thn91.vercel.app/
+#### https://lanars-react-school-git-develop-thn91.vercel.app/
 
 ## Project resources:
 
