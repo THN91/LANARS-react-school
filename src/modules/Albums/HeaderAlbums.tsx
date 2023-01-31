@@ -5,7 +5,7 @@ import {Box, Button, Divider, Typography} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 
-import {AllPath} from '../constants/path';
+import {AllPath} from '../../shared/constants/path';
 
 
 const HeaderAlbums = (): JSX.Element => {
@@ -15,7 +15,8 @@ const HeaderAlbums = (): JSX.Element => {
         display: 'flex',
         justifyContent: 'space-between',
         m: '24px 24px 16px 24px',
-      }}>
+      }}
+      >
         <Typography variant="h1" component="h4">
           Albums
         </Typography>

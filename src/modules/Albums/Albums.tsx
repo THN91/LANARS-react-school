@@ -4,12 +4,12 @@ import {Link} from 'react-router-dom';
 import {Box, Card, CardContent, CardMedia, styled, Typography} from '@mui/material';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
-import {getAlbum} from '../shared/store/albumSlice';
-import {useAppDispatch, useAppSelector} from '../shared/hooks/redux_hooks';
-import NotFound from '../shared/components/NotFound';
-import HeaderAlbums from '../shared/components/HeaderAlbums';
-import {colors} from '../styles/variables';
-import {getPhoto} from '../shared/store/photoSlice';
+import {getAlbum} from '../../shared/store/albumSlice';
+import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
+import NotFound from '../../shared/components/NotFound';
+import HeaderAlbums from './HeaderAlbums';
+import {colors} from '../../styles/variables';
+import {getPhoto} from '../../shared/store/photoSlice';
 
 
 const BlankAlbum = styled(CardMedia)(() => ({

@@ -23,12 +23,12 @@ import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternate
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
-import {AllPath} from '../shared/constants/path';
-import {colors} from '../styles/variables';
-import AddPhoto from '../shared/components/AddPhoto';
-import {useAppDispatch, useAppSelector} from '../shared/hooks/redux_hooks';
-import {getPhoto} from '../shared/store/photoSlice';
-import {addAlbum} from '../shared/store/albumSlice';
+import {AllPath} from '../../shared/constants/path';
+import {colors} from '../../styles/variables';
+import AddPhoto from './AddPhoto';
+import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
+import {getPhoto} from '../../shared/store/photoSlice';
+import {addAlbum} from '../../shared/store/albumSlice';
 
 
 const CreateAlbum = (): JSX.Element => {

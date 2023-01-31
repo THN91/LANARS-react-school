@@ -16,12 +16,12 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import {TransitionProps} from '@mui/material/transitions';
 
-import {useAppDispatch, useAppSelector} from '../hooks/redux_hooks';
-import {clearPhotoState, getPhoto} from '../store/photoSlice';
-import UploadButton from './UploadButton/UploadButton';
+import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
+import {clearIsNew, clearPhotoState, getPhoto} from '../../shared/store/photoSlice';
+import UploadButton from '../../shared/components/UploadButton/UploadButton';
 import {colors} from '../../styles/variables';
-import {IAlbumsProps} from '../interfaces/AlbumProps';
-import {AllPath} from '../constants/path';
+import {IAlbumsProps} from '../../shared/interfaces/AlbumProps';
+import {AllPath} from '../../shared/constants/path';
 
 
 const MyImageListItem = styled(ImageListItem)(({selected}: { selected: boolean }) => ({
@@ -32,10 +32,6 @@ const MyImageListItem = styled(ImageListItem)(({selected}: { selected: boolean }
   ['img']: {
     transform: selected && 'scale(0.8)',
   },
-}));
-
-const AddPhotoContainer = styled(Box)(() => ({
-
 }));
 
 const Transition = React.forwardRef(function transition(
@@ -59,15 +55,7 @@ const AddPhoto = ({isOpen, handleOpen, setPhotos}: IAlbumsProps): JSX.Element =>
 
 
   useEffect(() => {
-    const selectedNewPhoto = photo.photos.reduce((acc, uploadPhoto) => {
-      if (uploadPhoto.isNew && uploadPhoto.id) {
-        return {...acc, [uploadPhoto.id]: true};
-      }
-      return {...acc};
-    }, {});
-    if (Object.keys(selectedNewPhoto).length !== 0) {
-      setCheckedPhoto(prevState => ({...prevState, ...selectedNewPhoto}));
-    }
+    setCheckedPhoto(prevState => ({...prevState, ...photo.isNew}));
   }, [photo]);
 
   useEffect(() => {
@@ -84,13 +72,14 @@ const AddPhoto = ({isOpen, handleOpen, setPhotos}: IAlbumsProps): JSX.Element =>
 
   const handlerModal = () => {
     dispatch(clearPhotoState());
+    dispatch(clearIsNew());
     dispatch(getPhoto([...photos]));
     handleOpen();
   };
 
   return (
     <Dialog fullScreen open={isOpen} TransitionComponent={Transition}>
-      <AddPhotoContainer sx={{bgcolor: 'background.paper'}}>
+      <Box sx={{bgcolor: 'background.paper'}}>
         <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', m: 1, p: '0 32px'}}>
           <Box sx={{display: 'flex', alignItems: 'center'}}>
             <Link style={{textDecoration: 'none', color: 'inherit'}} to={AllPath.ALBUM}>
@@ -134,7 +123,7 @@ const AddPhoto = ({isOpen, handleOpen, setPhotos}: IAlbumsProps): JSX.Element =>
         <Box sx={{display: 'flex', flexDirection: 'row-reverse', m: 5}}>
           <UploadButton nameBtn={'SELECT FILES FROM COMPUTER'}/>
         </Box>
-      </AddPhotoContainer>
+      </Box>
     </Dialog>
   );
 };

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {useParams} from 'react-router';
 
 import {
@@ -16,12 +17,20 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import {TransitionProps} from '@mui/material/transitions';
 
-import {clearAlbumState, getAlbum, updateAlbum} from '../shared/store/albumSlice';
-import {useAppDispatch, useAppSelector} from '../shared/hooks/redux_hooks';
-import AppBarAlbum from '../shared/components/AppBarAlbum';
-import {colors} from '../styles/variables';
-import {clearPhotoState, getPhoto} from '../shared/store/photoSlice';
-import UploadButton from '../shared/components/UploadButton/UploadButton';
+import {clearAlbumState, getAlbum, updateAlbum} from '../../shared/store/albumSlice';
+import {useAppDispatch, useAppSelector} from '../../shared/hooks/redux_hooks';
+import AppBarAlbum from './AppBarAlbum';
+import {colors} from '../../styles/variables';
+import {
+  changeHeader,
+  clearIsNew,
+  clearPhotoState,
+  getPhoto,
+  setChecked,
+  setViewPhoto,
+} from '../../shared/store/photoSlice';
+import UploadButton from '../../shared/components/UploadButton/UploadButton';
+import {AllPath} from '../../shared/constants/path';
 
 
 const MyImageListItem = styled(ImageListItem)(({selected}: { selected: boolean }) => ({
@@ -48,31 +57,24 @@ const Transition = React.forwardRef(function transition(
   return <Slide direction="up" ref={ref} {...props} children={props.children}/>;
 });
 
+
 const Album = (): JSX.Element => {
+  const navigate = useNavigate();
   const {albumId} = useParams();
   const dispatch = useAppDispatch();
   const {album} = useAppSelector(state => state.album);
-  const {photo} = useAppSelector(state => state);
+  const {photos, checked, isNew} = useAppSelector(state => state.photo);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [checkedPhoto, setCheckedPhoto] = useState<Record<number, boolean>>({});
-  const isDisabled = Object.values(checkedPhoto).some(item => item);
-  const arrayCheckedPhoto = Object.entries(checkedPhoto)
+  const isDisabled = Object.values(checked).some(item => item);
+  const arrayCheckedPhoto = Object.entries(checked)
     .map(item => item[1] && Number(item[0]))
     .filter(item => item) as number[];
 
   useEffect(() => {
-    if(isOpen){
-      const selectedNewPhoto = photo.photos.reduce((acc, uploadPhoto) => {
-        if (uploadPhoto.isNew && uploadPhoto.id) {
-          return {...acc, [uploadPhoto.id]: true};
-        }
-        return {...acc};
-      }, {});
-      if (Object.keys(selectedNewPhoto).length !== 0) {
-        setCheckedPhoto(prevState => ({...prevState, ...selectedNewPhoto}));
-      }
+    if (isOpen) {
+      dispatch(setChecked({...checked, ...isNew}));
     }
-  }, [photo]);
+  }, [photos]);
 
 
   useEffect(() => {
@@ -87,33 +89,45 @@ const Album = (): JSX.Element => {
     }
   }, [album]);
 
+  useEffect(() => {
+    dispatch(changeHeader([...arrayCheckedPhoto]));
+  }, [checked]);
+
 
   const addPhotoToAlbum = () => {
     const newPhoto = {...album[0], photos: [...album[0].photos, ...arrayCheckedPhoto], id: Number(albumId)};
     dispatch(updateAlbum(newPhoto));
-    setCheckedPhoto({});
+    dispatch(setChecked({}));
+    dispatch(clearIsNew());
     setIsOpen(!isOpen);
   };
 
   const handlerClick = (photoId: number) =>
-    setCheckedPhoto((prevState) => ({...prevState, [photoId]: !prevState[photoId]}));
+    dispatch(setChecked({...checked, [photoId]: !checked[photoId]}));
+
+  const viewPhoto = (photoId: number) => {
+    dispatch(setViewPhoto(photoId));
+    navigate(AllPath.VIEW_PHOTO);
+  };
+
 
   return (
     <>
-      <AppBarAlbum isOpen={isOpen} setIsOpen={setIsOpen} checkedPhotoId={arrayCheckedPhoto}/>
+      <AppBarAlbum isOpen={isOpen} setIsOpen={setIsOpen}/>
       <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 1, m: '24px 40px'}}>
-        {photo.photos.map((item) => (
+        {photos.map((item) => (
           <MyImageListItem
             key={item.id}
-            selected={!!checkedPhoto[Number(item.id)]}
+            selected={!!checked[Number(item.id)]}
           >
             <img
+              onClick={() => viewPhoto(Number(item.id))}
               style={{borderRadius: 8, width: 142, height: 142}}
               src={`data:${item.type};base64,${item.image}`}
               alt="photo"/>
             <Checkbox
               onClick={() => handlerClick(Number(item.id))}
-              checked={!!checkedPhoto[Number(item.id)]}
+              checked={!!checked[Number(item.id)]}
               sx={{
                 display: arrayCheckedPhoto.find(photoId => photoId === item.id) ? 'flex' : 'none',
                 position: 'absolute',
@@ -156,10 +170,10 @@ const Album = (): JSX.Element => {
           </Box>
           <Divider/>
           <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 1, m: '24px 40px'}}>
-            {photo.photos.map((item) => (
+            {photos.map((item) => (
               <MyImageListItem
                 key={item.id}
-                selected={!!checkedPhoto[Number(item.id)]}
+                selected={!!checked[Number(item.id)]}
                 onClick={() => handlerClick(Number(item.id))}
               >
                 <img
@@ -167,7 +181,7 @@ const Album = (): JSX.Element => {
                   src={`data:${item.type};base64,${item.image}`}
                   alt={item.description}/>
                 <Checkbox
-                  checked={!!checkedPhoto[Number(item.id)]}
+                  checked={!!checked[Number(item.id)]}
                   sx={{position: 'absolute', top: '5px', right: '5px', color: '#fff'}}
                   value={item.id}/>
               </MyImageListItem>
